@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - expense-tracker-network
+
+  backend:
+    # If you have a backend Dockerfile, uncomment and modify this section
+    # build:
+    #   context: ../backend
+    #   dockerfile: Dockerfile
+    # For now, assuming backend runs locally
+    image: alpine:latest
+    command: echo "Backend should be running on host port 8000"
+    ports:
+      - "8000:8000"
+    networks:
+      - expense-tracker-network
+
+networks:
+  expense-tracker-network:
+    driver: bridge
